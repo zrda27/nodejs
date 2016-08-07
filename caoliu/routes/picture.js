@@ -11,7 +11,18 @@ router.get('/', function(req, res, next) {
             ep.fail(function(err){
                 next(err);
             });
-            conn.query('select * from tbPage', ep.done("data"));
+            var page, rows;
+            if(req.query.page){
+                page = parseInt(req.query.page);
+            }else{
+                page = 1;
+            }
+            if(req.query.rows){
+                rows = parseInt(req.query.rows);
+            }else{
+                rows = 10;
+            }
+            conn.query('select * from tbPage order by createTime desc limit ?, ?', [(page-1)*rows, rows], ep.done("data"));
             conn.query('select count(id) as count from tbPage', ep.done("count"));
             ep.all("data", "count", function(data, count){
                 console.log("all:" + data.length);
@@ -19,7 +30,10 @@ router.get('/', function(req, res, next) {
                 res.render('picture/index', {
                     title: 'Picture',
                     count: count[0]["count"],
-                    data: data
+                    data: data,
+                    paginationSize: Math.ceil(count[0]["count"]/rows),
+                    page: page,
+                    rows: rows
                 });
             });
         }else{
