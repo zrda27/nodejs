@@ -2,6 +2,7 @@
  * Created by Administrator on 2016-08-23.
  */
 var projectName = "demo";
+var destPath = "public/"
 
 var gulp = require('gulp');
 var uglify = require('gulp-uglify');
@@ -23,7 +24,7 @@ gulp.task('default', function () {
 gulp.task('default', ["cleanDest", "minjs", "less", "sass", "mincss", 'minimg']);
 
 gulp.task('cleanDest', function(cb) {
-    del(['public/css', 'public/js', 'public/images'], cb)
+    del([destPath + 'css', destPath + 'js', destPath + 'images'], cb)
 });
 gulp.task('cleanCssTmp', function(cb) {
     del(['src/css/tmp'], cb)
@@ -47,7 +48,7 @@ gulp.task('minjs', function() {
         .pipe(concat("demo" + '.js'))    //合并所有js到main.js
         .pipe(rename({suffix: '.min'}))   //rename压缩后的文件名
         .pipe(uglify())    //压缩
-        .pipe(gulp.dest('public/js'))
+        .pipe(gulp.dest(destPath + 'js'))
 })
 
 // 压缩 css 文件
@@ -60,7 +61,7 @@ gulp.task('mincss', function () {
         // 2. 压缩文件
         .pipe(minifyCSS())
         // 3. 另存为压缩文件
-        .pipe(gulp.dest('public/css'))
+        .pipe(gulp.dest(destPath + 'css'))
 });
 
 // 压缩图片任务
@@ -73,7 +74,7 @@ gulp.task('minimg', function () {
             progressive: true
         }))
         // 3. 另存图片
-        .pipe(gulp.dest('public/images'))
+        .pipe(gulp.dest(destPath + 'images'))
 });
 
 // 编译less
