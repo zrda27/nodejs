@@ -7,7 +7,7 @@
   </head>
   <body class="container">
     <ul class="nav nav-tabs">
-        <li role="presentation"><a href="javascript:;">主页</a></li>
+        <li role="presentation"><a href="/index">主页</a></li>
         <li role="presentation" class="active"><a href="javascript:;">图片查询</a></li>
         <li role="presentation" ><a href="javascript:;">关于</a></li>
     </ul>
@@ -27,6 +27,85 @@
             </tr>
         {{/each}}
     </table>
+    <nav>
+        <ul class="pagination navbar-left">
+            <li>
+                <a href="/picture?rows={{rows}}&page=1">
+                    <span aria-hidden="true">首页</span>
+                </a>
+            </li>
+            {{#compare page 1}}
+                <li>
+                    <a href="/picture?rows={{rows}}&page={{sub page 1}}">
+                        <span aria-hidden="true">上一页</span>
+                    </a>
+                </li>
+            {{else}}
+                    <li class="disabled">
+                        <a href="javascript:;">
+                            <span aria-hidden="true">上一页</span>
+                        </a>
+                    </li>
+            {{/compare}}
+            {{#compare paginationSize page}}
+                <li>
+                    <a href="/picture?rows={{rows}}&page={{add page 1}}">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+            {{else}}
+                <li class="disabled">
+                    <a href="javascript:;">
+                        <span aria-hidden="true">下一页</span>
+                    </a>
+                </li>
+            {{/compare}}
+            <li>
+                <a href="/picture?rows={{rows}}&page={{paginationSize}}">
+                    <span aria-hidden="true">尾页</span>
+                </a>
+            </li>
+        </ul>
+        <ul class="pagination navbar-right">
+            <li>
+                <button type="button" class="btn btn-default">
+                    共{{paginationSize}}页
+                </button>
+            </li>
+            <li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown">
+                        当前页 {{page}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {{#fromTo 1 paginationSize}}
+                            <li><a href="/picture?rows={{../rows}}&page={{index}}">{{index}}</a></li>
+                        {{/fromTo}}
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <button type="button" class="btn btn-default">
+                    总记录{{count}}
+                </button>
+            </li>
+            <li>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default dropdown-toggle"
+                            data-toggle="dropdown">
+                        每页记录 {{rows}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/picture?rows=5&page=1">5</a></li>
+                        <li><a href="/picture?rows=10&page=1">10</a></li>
+                        <li><a href="/picture?rows=20&page=1">20</a></li>
+                        <li><a href="/picture?rows=50&page=1">50</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
     <script src='/js/jquery.min.js'></script>
     <script src='/js/bootstrap.min.js'></script>
   </body>

@@ -1,0 +1,1 @@
+{"version":3,"sources":["1.css","a.css"],"names":[],"mappings":"AAAA,GCAA,GDCI,MAAA","file":"demo.min.css","sourcesContent":["#a{\r\n    width: 1px;\r\n}","h1 {\n  width: 1px; }\n"],"sourceRoot":"/source/"}
