@@ -13,7 +13,9 @@ var del = require('del');
 var imagemin = require('gulp-imagemin');
 var less = require('gulp-less');
 var sass = require('gulp-sass');
-var gutil = require('gulp-util')
+var gutil = require('gulp-util');
+var sourcemaps = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
 
 gulp.task('default', function () {
     gutil.log('message')
@@ -47,7 +49,9 @@ gulp.task('minjs', function() {
     gulp.src('src/**/*.js')
         .pipe(concat("demo" + '.js'))    //合并所有js到main.js
         .pipe(rename({suffix: '.min'}))   //rename压缩后的文件名
+        .pipe(sourcemaps.init())
         .pipe(uglify())    //压缩
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(destPath + 'js'))
 })
 
@@ -56,10 +60,13 @@ gulp.task('minjs', function() {
 gulp.task('mincss', function () {
     // 1. 找到文件
     gulp.src('src/**/*.css')
+        .pipe(sourcemaps.init())
+        .pipe(autoprefixer())
         .pipe(concat("demo" + '.css'))    //合并所有js到main.js
         .pipe(rename({suffix: '.min'}))   //rename压缩后的文件名
         // 2. 压缩文件
         .pipe(minifyCSS())
+        .pipe(sourcemaps.write('.'))
         // 3. 另存为压缩文件
         .pipe(gulp.dest(destPath + 'css'))
 });
