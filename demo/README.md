@@ -15,6 +15,7 @@
     npm install gulp-sass --save-dev
     npm install node-sass -g
     npm install gulp-util --save-dev
+    npm install gulp-sourcemaps gulp-autoprefixer --save-dev
 
 **3 执行任务**
     gulp taskName
