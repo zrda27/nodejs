@@ -12,8 +12,6 @@
     npm install del --save-dev
     npm install gulp-imagemin  --save-dev
     npm install gulp-less --save-dev
-    npm install gulp-sass --save-dev
-    npm install node-sass -g
     npm install gulp-util --save-dev
     npm install gulp-sourcemaps gulp-autoprefixer --save-dev
 
