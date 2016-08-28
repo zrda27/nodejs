@@ -1,18 +1,31 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var hbs = require('./bin/enhanceHbs');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+app.use(session({
+    secret: '12345',
+    name: "zrd",
+    cookie: {maxAge: 300000 },  //设置maxAge是80000ms，即80s后session和相应的cookie失效过期
+    resave: false,
+    saveUninitialized: true
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+hbs.registerPartials(__dirname + '/views/partials');
+//app.set('view engine', 'ejs');
+app.engine('hbs', hbs.__express);
+app.set('view engine', 'hbs');
 
 app.use(favicon());
 app.use(logger('dev'));

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{{{title}}}</title>
+      <link href="/lib/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container">
+      {{>navs active="home"}}
+      <script src='/lib/js/jquery.min.js'></script>
+      <script src='/lib/js/bootstrap.min.js'></script>
+  {{page 1}}
+      {{req.session.page}}
+      {{req.query.name}}
+  </body>
+</html>

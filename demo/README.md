@@ -14,6 +14,9 @@
     npm install gulp-less --save-dev
     npm install gulp-util --save-dev
     npm install gulp-sourcemaps gulp-autoprefixer --save-dev
+    
+    npm install hbs --save
+    npm install express-session --save
 
 **3 执行任务**
     gulp taskName
