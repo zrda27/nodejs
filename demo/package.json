@@ -13,6 +13,7 @@
     "express": "~4.0.0",
     "express-session": "^1.14.1",
     "hbs": "^4.0.0",
+    "mongoose": "^4.5.10",
     "morgan": "~1.0.0",
     "static-favicon": "~1.0.0"
   },
