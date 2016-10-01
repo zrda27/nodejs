@@ -32,4 +32,10 @@ hbs.registerHelper('fromTo', function(begin, end, options){
     }
     return ret;
 });
-module.exports = hbs;
+
+module.exports = function(partialsPath){
+    if(partialsPath){
+        hbs.registerPartials(partialsPath);
+    }
+    return hbs;
+}

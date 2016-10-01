@@ -23,10 +23,14 @@
     gulp taskName
    
 #其他
-    ##启动mongodb
-        mongod.exe --dbpath F:\web-server\mongo-data\demo
-    ##以服务启动mongodb
-        ###安装服务
-            mongod.exe --logpath "F:\web-server\mongo-data\mongodb.log" --logappend --dbpath "F:\web-server\mongo-data\demo" --serviceName "mongodb-demo" --serviceDisplayName "mongodb-demo" --install
-        ###启动服务
-            net start mongodb-demo
+
+##启动mongodb
+    mongod.exe --dbpath F:\web-server\mongo-data\demo
+   
+##以服务启动mongodb
+
+###安装服务
+mongod.exe --logpath "F:\web-server\mongo-data\mongodb.log" --logappend --dbpath "F:\web-server\mongo-data\demo" --serviceName "mongodb-demo" --serviceDisplayName "mongodb-demo" --install
+
+###启动服务
+    net start mongodb-demo
