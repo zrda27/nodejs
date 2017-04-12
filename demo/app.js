@@ -1,18 +1,33 @@
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var hbs = require('./bin/enhanceHbs')(__dirname + "/views/partials");
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+
+app.use(session({
+    secret: '12345',
+    name: "zrd",
+    cookie: {maxAge: 300000 },  //session的有效时间
+    resave: false,
+    saveUninitialized: true
+}));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+
+//app.set('view engine', 'ejs');
+app.engine('hbs', hbs.__express);
+app.set('view engine', 'hbs');
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -20,6 +35,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(function(req, res, next){
+    var authInfo = req.headers.authorization;
+    if(authInfo && authInfo.indexOf('Basic') == 0){
+        authInfo = authInfo.replace('Basic ', '');
+        authInfo = (new Buffer(authInfo, 'base64').toString('utf8'));
+        var tmp = authInfo.split(":");
+        var name = tmp[0];
+        var password = tmp[1];
+        if(name == 'zrd' && password == '123'){
+            req.session.loginInfo = {
+                name: name,
+                password: password
+            }
+        }
+    }
+    var loginInfo = req.session.loginInfo;
+    if(loginInfo){
+        next();
+    }else{
+        res.set('Content-Type', 'text/html');
+        res.set('WWW-Authenticate', 'Basic realm="nologin"')
+        res.status(401).send('Sorry, we cannot find that!');
+    }
+});
 
 app.use('/', routes);
 app.use('/users', users);

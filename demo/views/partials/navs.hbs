@@ -1,0 +1,6 @@
+<ul class="nav nav-pills">
+    {{#each navItems}}
+        <li role="presentation" {{#equal ../active id}}class="active" {{/equal}}><a href="javascript:;">{{{title}}}</a></li>
+    {{/each}}
+    <li role="presentation" class="pull-right"><a href="javascript:;">登录/注销</a></li>
+</ul>
